@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">taskmaster</string>
+    <string name="my_tasks">My Tasks</string>
+    <string name="my_tasks_input_text_view">Input My Tasks Name</string>
+    <string name="add_tasks_button">Add Tasks</string>
+    <string name="show_all_tasks_button">All Tasks</string>
+    <string name="avatar_of_user">Avatar of user</string>
+    <string name="add_tasks_title">Add Tasks</string>
+    <string name="task_title">Task Title</string>
+    <string name="task_description">Task Description</string>
+    <string name="do_something">Do Something</string>
+    <string name="null_string">\"\"</string>
+    <string name="all_tasks">All Tasks</string>
 </resources>
