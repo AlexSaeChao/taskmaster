@@ -12,17 +12,17 @@ import com.chaoalex.taskmaster.R;
 
 public class AddTasksFormActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_tasks);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_add_tasks);
 
-        Button addTasksButton = findViewById(R.id.AddTasksActivityAddTaskButton);
-        addTasksButton.setOnClickListener(v -> {
-            System.out.println("Add tasks button was pressed. Submitted!");
+    Button addTasksButton = findViewById(R.id.AddTasksActivityAddTaskButton);
+    addTasksButton.setOnClickListener(v -> {
+      System.out.println("Add tasks button was pressed. Submitted!");
 
-            ((TextView)findViewById(R.id.AddTasksActivitySubmitTextView)).setText("Submitted!");
+      ((TextView) findViewById(R.id.AddTasksActivitySubmitTextView)).setText("Submitted!");
 
-        });
-    }
+    });
+  }
 }

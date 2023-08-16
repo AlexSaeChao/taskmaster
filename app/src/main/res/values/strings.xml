@@ -11,4 +11,12 @@
     <string name="do_something">Do Something</string>
     <string name="null_string">\"\"</string>
     <string name="all_tasks">All Tasks</string>
+    <string name="username_text_view">Username</string>
+    <string name="save_button">Save</string>
+    <string name="settings_button">"Send user to settings page."</string>
+    <string name="task_description_text_view">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="task_1">Task 1</string>
+    <string name="task_2">Task 2</string>
+    <string name="task_3">Task 3</string>
+    <string name="no_task_name"> No Task Name</string>
 </resources>
