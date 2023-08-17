@@ -10,39 +10,50 @@ Welcome to the Task Manager Android application! This user-friendly application 
 
 ## Features
 
-### 1. **Homepage**
-- Built based on a specific wireframe.
-    - Heading at the top.
-    - Mock image of "my tasks" view.
-    - Three hardcoded task titles as buttons.
-        - Tapping a title navigates to the corresponding Task Detail page.
-    - A button to access the **Settings** page.
-        - After inputting username in settings, displays “{username}” above the task buttons.
-    - Navigation buttons:
-        - **Add Tasks**: Takes you to the "Add a Task" page.
-        - **All Tasks**: Takes you to the "All Tasks" page.
+### 1. **Task Model**
+- Core data structure for the app.
+    - **Title**: Descriptive title for the task.
+    - **Body**: Detailed information about the task.
+    - **State**: Task's current state which can be one of, cannot currently choose type yet when adding tasks:
+        - New
+        - Assigned
+        - In Progress
+        - Complete
 
-### 2. **Add a Task**
-- Designed for adding new tasks.
+### 2. **Homepage**
+- Reconstructed based on an improved wireframe.
+    - Implements a RecyclerView for displaying Task data.
+        - Contains hardcoded Task data at the moment.
+    - Tapping on a Task in the RecyclerView launches its detail page.
+    - Other Features:
+        - Heading at the top.
+        - Mock image of "my tasks" view.
+        - Button to access the **Settings** page.
+            - After inputting username in settings, displays “{username}” above the task buttons.
+        - Navigation buttons:
+            - **Add Tasks**: Leads to the "Add a Task" page.
+            - **All Tasks**: Directs to the "All Tasks" page.
+
+### 3. **Add a Task**
+- Designed for creating new tasks. Not fully complete
     - Input fields:
-        - **Title**: Task's title.
-        - **Body**: Detailed description.
-    - "Submit" button:
-        - On submission, shows "submitted!" without saving data at this point.
+        - **Title**
+        - **Body**
+    - "Submit" button which, upon pressing, shows "submitted!" without saving data just yet.
 
-### 3. **Task Detail Page**
-- Displays detailed information about a task.
+### 4. **Task Detail Page**
+- Detailed view of a particular task.
     - Task title at the top.
-    - Lorem Ipsum text as task description.
+    - Lorem Ipsum as the task's description.
 
-### 4. **Settings Page**
-- Personalize the app experience.
+### 5. **Settings Page**
+- Enables personalized user experience.
     - Input field for username.
-    - "Save" button to confirm username.
+    - "Save" button for confirmation.
 
-### 5. **All Tasks**
-- Currently a placeholder image.
-    - For navigating back, use the phone's back button.
+### 6. **All Tasks**
+- A placeholder image for now.
+    - To navigate back, simply use the phone's back button.
 
 ## Screenshots
 
@@ -54,29 +65,38 @@ Welcome to the Task Manager Android application! This user-friendly application 
 ## How to Use
 
 1. **Launching the Application**
-    - Initiate the application to see the homepage.
+    - Initiate the app to land on the homepage.
 
 2. **Adding a Task**
-    - From the homepage, access "Add a Task".
-    - Input task details and press submit.
+    - From the homepage, navigate to "Add a Task".
+    - Fill in the task details and click submit.
 
 3. **Viewing a Task Detail**
-    - On the homepage, tap on a task title.
-    - It will show the detail of that specific task.
+    - On the homepage, click on a task title from the RecyclerView.
+    - The detail page of that specific task will be displayed.
 
 4. **Personalizing with Settings**
-    - Use the settings button on the homepage.
-    - Input your username and save.
+    - Click on the settings icon from the homepage.
+    - Type in your username and save.
 
 5. **Browsing All Tasks**
-    - Tap "All Tasks" on the homepage.
-    - It's a placeholder image for now.
+    - Click on "All Tasks" from the homepage.
+    - Currently, this displays a placeholder image.
 
 ## Daily Changes
+
+2023/08/15
 - Updated the **Homepage** with new button functionalities and UI adjustments.
 - Introduced the **Task Detail Page**.
 - Designed the **Settings Page** for personalized experience, changing your user nickname.
 - Enhanced **Documentation**: Replaced homepage screenshot and added a screenshot of the Task Detail page.
+
+
+2023/08/16
+- Introduced the **Task Model** for structured data handling.
+- Refactored the **Homepage** to incorporate RecyclerView for displaying tasks. Added hardcoded Task data.
+- Enhanced **Documentation**: Added new feature tasks and updated the daily changes section.
+
 
 ---
 
