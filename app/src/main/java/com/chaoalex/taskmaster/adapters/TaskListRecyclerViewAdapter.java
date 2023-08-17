@@ -1,5 +1,7 @@
 package com.chaoalex.taskmaster.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chaoalex.taskmaster.MainActivity;
 import com.chaoalex.taskmaster.R;
+import com.chaoalex.taskmaster.activities.TaskDetailActivity;
 import com.chaoalex.taskmaster.models.Task;
 
 import java.util.List;
@@ -17,11 +21,13 @@ import java.util.List;
 
 public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRecyclerViewAdapter.TaskListViewHolder> {
 
-
   List<Task> tasks;
 
-  public TaskListRecyclerViewAdapter(List<Task> tasks) {
+  Context callingActivity;
+
+  public TaskListRecyclerViewAdapter(List<Task> tasks, Context callingActivity) {
     this.tasks = tasks;
+    this.callingActivity = callingActivity;
   }
 
   @NonNull
@@ -37,6 +43,13 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
     TextView taskFragmentTextView = (TextView) holder.itemView.findViewById(R.id.taskFragmentTextView);
     String taskFragmentText = (position + 1) + ". " + tasks.get(position).getName();
     taskFragmentTextView.setText(taskFragmentText);
+
+    View taskViewHolder = holder.itemView;
+    taskViewHolder.setOnClickListener(view -> {
+      Intent goToTaskDetailIntent = new Intent(callingActivity, TaskDetailActivity.class);
+      goToTaskDetailIntent.putExtra(MainActivity.TASK_NAME_EXTRA_TAG, tasks.get(position).getName());
+      callingActivity.startActivity(goToTaskDetailIntent);
+    });
   }
 
   @Override
