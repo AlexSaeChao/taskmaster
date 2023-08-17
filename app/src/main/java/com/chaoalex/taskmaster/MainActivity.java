@@ -19,6 +19,7 @@ import com.chaoalex.taskmaster.activities.AllTasksActivity;
 import com.chaoalex.taskmaster.activities.SettingsActivity;
 import com.chaoalex.taskmaster.adapters.TaskListRecyclerViewAdapter;
 import com.chaoalex.taskmaster.models.Task;
+import com.chaoalex.taskmaster.models.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
 //    TaskListRecyclerViewAdapter adapter = new TaskListRecyclerViewAdapter(tasks);
 //    TaskListsRecyclerView.setAdapter(adapter);
 
+    int spaceInPixels = 8;
+
     TaskListRecyclerViewAdapter adapter = new TaskListRecyclerViewAdapter(tasks, this);
 
 
@@ -133,16 +136,16 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void createTaskInstances() {
-    tasks.add(new Task("Wash Face"));
-    tasks.add(new Task("Brush Teeth"));
-    tasks.add(new Task("Wash Hands"));
-    tasks.add(new Task("Clean Dishes"));
-    tasks.add(new Task("Make Breakfast"));
-    tasks.add(new Task("Setup Computer"));
-    tasks.add(new Task("Check Emails"));
-    tasks.add(new Task("Open IDE"));
-    tasks.add(new Task("Code Time"));
-    tasks.add(new Task("Take Break"));
+    tasks.add(new Task("Wash Face", Type.COMPLETE));
+    tasks.add(new Task("Brush Teeth", Type.COMPLETE));
+    tasks.add(new Task("Wash Hands", Type.COMPLETE));
+    tasks.add(new Task("Make Breakfast", Type.IN_PROGRESS));
+    tasks.add(new Task("Clean Dishes", Type.ASSIGNED));
+    tasks.add(new Task("Setup Computer", Type.ASSIGNED));
+    tasks.add(new Task("Check Emails", Type.ASSIGNED));
+    tasks.add(new Task("Open IDE", Type.ASSIGNED));
+    tasks.add(new Task("Code Time", Type.ASSIGNED));
+    tasks.add(new Task("Take Break", Type.NEW));
   }
 
 

@@ -2,9 +2,11 @@ package com.chaoalex.taskmaster.models;
 
 public class Task {
   String name;
+  Type taskType;
 
-  public Task(String name) {
+  public Task(String name, Type taskType) {
     this.name = name;
+    this.taskType = taskType;
   }
 
   public String getName() {
