@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,17 +22,23 @@ import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
 import com.chaoalex.taskmaster.activities.SettingsActivity;
 import com.chaoalex.taskmaster.adapters.TaskListRecyclerViewAdapter;
+import com.chaoalex.taskmaster.database.TaskMasterDatabase;
 import com.chaoalex.taskmaster.models.Task;
-import com.chaoalex.taskmaster.models.Type;
+import com.chaoalex.taskmaster.models.TaskCategoryEnum;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+  private final String TAG = "MainActivity";
   public static final String TASK_NAME_EXTRA_TAG = "tasksName";
+  public static final String TASK_DESCRIPTION_EXTRA_TAG = "tasksDescription";
   SharedPreferences preferences;
-
   List<Task> tasks = new ArrayList<>();
+  TaskMasterDatabase taskMasterDatabase;
+  public static final String DATABASE_NAME = "chaoalex_task_master";
+  TaskListRecyclerViewAdapter adapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-
+    setupDatabase();
     setupSettingsButton();
 //    setupTask1Button();
 //    setupTask2Button();
 //    setupTask3Button();
     setupAddTasksButton();
     setupAllTasksButton();
-    createTaskInstances();
+
     setupRecyclerView();
   }
 
@@ -57,6 +64,19 @@ public class MainActivity extends AppCompatActivity {
     super.onResume();
 
     setupUsernameTextView();
+    updateTaskListFromDatabase();
+  }
+
+  void setupDatabase() {
+    taskMasterDatabase = Room.databaseBuilder(
+                    getApplicationContext(),
+                    TaskMasterDatabase.class,
+                    DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+            .build();
+
+    tasks = taskMasterDatabase.taskDao().findAll();
   }
 
   void setupSettingsButton() {
@@ -102,9 +122,8 @@ public class MainActivity extends AppCompatActivity {
 //    });
 //  }
 
-
   void setupAddTasksButton() {
-    Button addTasksButton = findViewById(R.id.MainActivityAddTasksButton);
+    Button addTasksButton = findViewById(R.id.MainActivityMoveToAddTasksButton);
     addTasksButton.setOnClickListener(v -> {
       System.out.println("Add tasks button was pressed.");
       Intent goToAddTasksFormIntent = new Intent(MainActivity.this, AddTasksFormActivity.class);
@@ -137,31 +156,22 @@ public class MainActivity extends AppCompatActivity {
         super.getItemOffsets(outRect, view, parent, state);
         outRect.bottom = spaceInPixels;
 
-        if(parent.getChildAdapterPosition(view) == tasks.size()-1) {
+        if (parent.getChildAdapterPosition(view) == tasks.size() - 1) {
           outRect.bottom = 0;
         }
       }
     });
 
-    TaskListRecyclerViewAdapter adapter = new TaskListRecyclerViewAdapter(tasks, this);
+    adapter = new TaskListRecyclerViewAdapter(tasks, this);
 
 
     TaskListsRecyclerView.setAdapter(adapter);
   }
 
-  void createTaskInstances() {
-    tasks.add(new Task("Wash Face", Type.COMPLETE));
-    tasks.add(new Task("Brush Teeth", Type.COMPLETE));
-    tasks.add(new Task("Wash Hands", Type.COMPLETE));
-    tasks.add(new Task("Make Breakfast", Type.IN_PROGRESS));
-    tasks.add(new Task("Clean Dishes", Type.ASSIGNED));
-    tasks.add(new Task("Setup Computer", Type.ASSIGNED));
-    tasks.add(new Task("Check Emails", Type.ASSIGNED));
-    tasks.add(new Task("Open IDE", Type.ASSIGNED));
-    tasks.add(new Task("Code Time", Type.ASSIGNED));
-    tasks.add(new Task("Take Break", Type.NEW));
+  void updateTaskListFromDatabase() {
+    tasks.clear();
+    tasks.addAll(taskMasterDatabase.taskDao().findAll());
+    adapter.notifyDataSetChanged();
   }
-
-
 
 }
