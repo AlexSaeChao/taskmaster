@@ -23,67 +23,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/my_tasks"
+        android:hint="@string/task_title"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#8D6E63"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityTextLabelTextView" />
-
-    <EditText
-        android:id="@+id/AddTasksActivityDoSomethingInputTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/do_something"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textColorHint="#8D6E63"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddTasksTaskDescriptionTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityAddTaskTextView" />
 
     <Button
-        android:id="@+id/AddTasksActivityAddTaskButton"
+        android:id="@+id/AddTasksActivitySaveTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:text="@string/add_tasks_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityDoSomethingInputTextView"
+        app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityStateSpinner"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/AddTasksActivitySubmitTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="304dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.265"
-        app:layout_constraintStart_toEndOf="@+id/AddTasksActivityAddTaskButton"
+        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintStart_toEndOf="@+id/AddTasksActivitySaveTaskButton"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/AddTasksActivityTextLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Spinner
+        android:id="@+id/AddTasksActivityStateSpinner"
+        android:layout_width="349dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/task_title"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityAddTaskTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/AddTaskDescriptionTaskDescriptionMultiAutoCompleteTextView" />
 
-    <TextView
-        android:id="@+id/AddTasksTaskDescriptionTextView"
+    <MultiAutoCompleteTextView
+        android:id="@+id/AddTaskDescriptionTaskDescriptionMultiAutoCompleteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/task_description"
+        android:layout_marginTop="24dp"
+        android:hint="@string/task_description"
+        android:minHeight="48dp"
+        android:textColorHint="#8D6E63"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityTaskTitleInputTextView" />
 

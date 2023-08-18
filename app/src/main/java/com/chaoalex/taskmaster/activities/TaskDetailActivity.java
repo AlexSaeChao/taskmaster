@@ -17,11 +17,13 @@ public class TaskDetailActivity extends AppCompatActivity {
     setContentView(R.layout.activity_task_detail);
 
     setupTasksNameTextView();
+    setupTasksDescriptionTextView();
   }
 
   void setupTasksNameTextView() {
     Intent callingIntent = getIntent();
     String tasksNameString = null;
+
     if (callingIntent != null) {
       tasksNameString = callingIntent.getStringExtra(MainActivity.TASK_NAME_EXTRA_TAG);
     }
@@ -33,4 +35,21 @@ public class TaskDetailActivity extends AppCompatActivity {
       TasksNameTextView.setText(R.string.no_task_name);
     }
   }
+
+  void setupTasksDescriptionTextView() {
+    Intent callingIntent = getIntent();
+    String tasksDescriptionString = null;
+
+    if (callingIntent != null) {
+      tasksDescriptionString = callingIntent.getStringExtra(MainActivity.TASK_DESCRIPTION_EXTRA_TAG);
+    }
+
+    TextView TasksDescriptionTextView = (TextView) findViewById(R.id.TaskDetailActivityTaskDescriptionTextView);
+    if (tasksDescriptionString != null) {
+      TasksDescriptionTextView.setText(tasksDescriptionString);
+    } else {
+      TasksDescriptionTextView.setText(R.string.no_task_description);
+    }
+  }
+
 }
