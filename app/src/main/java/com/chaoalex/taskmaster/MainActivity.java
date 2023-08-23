@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,12 +21,12 @@ import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
 import com.chaoalex.taskmaster.activities.SettingsActivity;
 import com.chaoalex.taskmaster.adapters.TaskListRecyclerViewAdapter;
-import com.chaoalex.taskmaster.database.TaskMasterDatabase;
 import com.chaoalex.taskmaster.models.Task;
 import com.chaoalex.taskmaster.models.TaskCategoryEnum;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
   public static final String TASK_DESCRIPTION_EXTRA_TAG = "tasksDescription";
   SharedPreferences preferences;
   List<Task> tasks = new ArrayList<>();
-  TaskMasterDatabase taskMasterDatabase;
-  public static final String DATABASE_NAME = "chaoalex_task_master";
+
+
   TaskListRecyclerViewAdapter adapter;
 
   @Override
@@ -47,14 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-    setupDatabase();
+
     setupSettingsButton();
-//    setupTask1Button();
-//    setupTask2Button();
-//    setupTask3Button();
     setupAddTasksButton();
     setupAllTasksButton();
-
+    createTaskInstants();
     setupRecyclerView();
   }
 
@@ -67,17 +63,6 @@ public class MainActivity extends AppCompatActivity {
     updateTaskListFromDatabase();
   }
 
-  void setupDatabase() {
-    taskMasterDatabase = Room.databaseBuilder(
-                    getApplicationContext(),
-                    TaskMasterDatabase.class,
-                    DATABASE_NAME)
-            .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
-            .build();
-
-    tasks = taskMasterDatabase.taskDao().findAll();
-  }
 
   void setupSettingsButton() {
     ImageView settingsButton = findViewById(R.id.MainActivitySettingsButton);
@@ -92,35 +77,6 @@ public class MainActivity extends AppCompatActivity {
     ((TextView) findViewById(R.id.MainActivityUserNicknameTextView)).setText(userNickname);
   }
 
-//  void setupTask1Button() {
-//    Button Task1Button = findViewById(R.id.MainActivityTask1Button);
-//    Task1Button.setOnClickListener(v -> {
-//      String tasksName = ((Button)findViewById(R.id.MainActivityTask1Button)).getText().toString();
-//      Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetailActivity.class);
-//      goToTaskDetailIntent.putExtra(TASK_NAME_EXTRA_TAG, tasksName);
-//      startActivity(goToTaskDetailIntent);
-//    });
-//  }
-//
-//  void setupTask2Button() {
-//    Button Task2Button = findViewById(R.id.MainActivityTask2Button);
-//    Task2Button.setOnClickListener(v -> {
-//      String tasksName = ((Button)findViewById(R.id.MainActivityTask2Button)).getText().toString();
-//      Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetailActivity.class);
-//      goToTaskDetailIntent.putExtra(TASK_NAME_EXTRA_TAG, tasksName);
-//      startActivity(goToTaskDetailIntent);
-//    });
-//  }
-//
-//  void setupTask3Button() {
-//    Button Task3Button = findViewById(R.id.MainActivityTask3Button);
-//    Task3Button.setOnClickListener(v -> {
-//      String tasksName = ((Button)findViewById(R.id.MainActivityTask3Button)).getText().toString();
-//      Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetailActivity.class);
-//      goToTaskDetailIntent.putExtra(TASK_NAME_EXTRA_TAG, tasksName);
-//      startActivity(goToTaskDetailIntent);
-//    });
-//  }
 
   void setupAddTasksButton() {
     Button addTasksButton = findViewById(R.id.MainActivityMoveToAddTasksButton);
@@ -169,9 +125,19 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void updateTaskListFromDatabase() {
-    tasks.clear();
-    tasks.addAll(taskMasterDatabase.taskDao().findAll());
+    // todo: make a dynamoDB GRAPHQL call
+//    tasks.clear();
+//    tasks.addAll(taskMasterDatabase.taskdao().findall());
     adapter.notifyDataSetChanged();
+  }
+
+
+  void createTaskInstants() {
+    //temp task
+    Task taskOne = new Task("Test", "Test Description", new java.util.Date(), TaskCategoryEnum.ASSIGNED);
+    Task taskTwo = new Task("Test 2", "Test Description 2", new java.util.Date(), TaskCategoryEnum.NEW);
+    tasks.add(taskOne);
+    tasks.add(taskTwo);
   }
 
 }

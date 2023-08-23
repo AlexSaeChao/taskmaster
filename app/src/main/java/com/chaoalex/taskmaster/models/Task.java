@@ -1,14 +1,11 @@
 package com.chaoalex.taskmaster.models;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
 
 import java.util.Date;
 
-@Entity
 public class Task {
-  @PrimaryKey(autoGenerate = true)
-          public Long id;
+
   String title;
   String body;
   java.util.Date dateCreated;
@@ -21,13 +18,7 @@ public class Task {
     this.state = state;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public String getTitle() {
     return title;
