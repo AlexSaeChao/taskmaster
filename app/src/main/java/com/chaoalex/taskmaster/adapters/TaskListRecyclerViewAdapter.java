@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chaoalex.taskmaster.MainActivity;
 import com.chaoalex.taskmaster.R;
 import com.chaoalex.taskmaster.activities.TaskDetailActivity;
-import com.chaoalex.taskmaster.models.Task;
+import com.amplifyframework.datastore.generated.model.Task;
 
-import java.text.DateFormat;
+
 import java.util.List;
 
 //public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter {
@@ -53,7 +53,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
     taskViewHolder.setOnClickListener(view -> {
       Intent goToTaskDetailIntent = new Intent(callingActivity, TaskDetailActivity.class);
       goToTaskDetailIntent.putExtra(MainActivity.TASK_NAME_EXTRA_TAG, tasks.get(position).getTitle());
-      goToTaskDetailIntent.putExtra(MainActivity.TASK_DESCRIPTION_EXTRA_TAG, tasks.get(position).getBody());
+      goToTaskDetailIntent.putExtra(MainActivity.TASK_DESCRIPTION_EXTRA_TAG, tasks.get(position).getDescription());
       callingActivity.startActivity(goToTaskDetailIntent);
     });
   }

@@ -14,11 +14,19 @@ public class TaskMasterAmplifyApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
+//    try {
+//      Amplify.addPlugin(new AWSApiPlugin());
+//      Amplify.configure(getApplicationContext());
+//    } catch (AmplifyException ae) {
+//      Log.e(TAG, "Error Initializing Amplify: " + ae.getMessage(), ae);
+//    }
     try {
-      Amplify.addPlugin(new AWSApiPlugin());
+      Amplify.addPlugin(new AWSApiPlugin()); // If you're using GraphQL.
+      // ... other plugins if necessary
       Amplify.configure(getApplicationContext());
-    } catch (AmplifyException ae) {
-      Log.e(TAG, "Error Initializing Amplify: " + ae.getMessage(), ae);
+      Log.i("AmplifySetup", "Amplify was configured.");
+    } catch (AmplifyException e) {
+      Log.e("AmplifySetup", "Could not configure Amplify.", e);
     }
   }
 }

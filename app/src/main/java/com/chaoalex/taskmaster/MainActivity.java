@@ -21,12 +21,12 @@ import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
 import com.chaoalex.taskmaster.activities.SettingsActivity;
 import com.chaoalex.taskmaster.adapters.TaskListRecyclerViewAdapter;
-import com.chaoalex.taskmaster.models.Task;
-import com.chaoalex.taskmaster.models.TaskCategoryEnum;
+import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.TaskCategoryEnum;
+
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     setupSettingsButton();
     setupAddTasksButton();
     setupAllTasksButton();
-    createTaskInstants();
     setupRecyclerView();
   }
 
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     super.onResume();
 
     setupUsernameTextView();
-    updateTaskListFromDatabase();
+//    updateTaskListFromDatabase();
   }
 
 
@@ -124,20 +123,12 @@ public class MainActivity extends AppCompatActivity {
     TaskListsRecyclerView.setAdapter(adapter);
   }
 
-  void updateTaskListFromDatabase() {
-    // todo: make a dynamoDB GRAPHQL call
-//    tasks.clear();
-//    tasks.addAll(taskMasterDatabase.taskdao().findall());
-    adapter.notifyDataSetChanged();
-  }
+//  void updateTaskListFromDatabase() {
+//    // todo: make a dynamoDB GRAPHQL call
+////    tasks.clear();
+////    tasks.addAll(taskMasterDatabase.taskdao().findall());
+//    adapter.notifyDataSetChanged();
+//  }
 
-
-  void createTaskInstants() {
-    //temp task
-    Task taskOne = new Task("Test", "Test Description", new java.util.Date(), TaskCategoryEnum.ASSIGNED);
-    Task taskTwo = new Task("Test 2", "Test Description 2", new java.util.Date(), TaskCategoryEnum.NEW);
-    tasks.add(taskOne);
-    tasks.add(taskTwo);
-  }
 
 }
