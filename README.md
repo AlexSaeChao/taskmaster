@@ -8,8 +8,19 @@ Welcome to the Task Manager Android application! This user-friendly application 
 
 ## Features
 
-### 1. **Task Model and Room**
-- Core data structure for the app integrated with Room.
+### Feature Tasks for 2023/08/24
+
+- **Tasks Are Cloudy**
+    - Using the `amplify add api` command, establish a Task resource that mirrors our existing Task schema. Update all references to the Task data to use AWS Amplify for accessing your data in DynamoDB.
+
+- **Add Task Form**
+    - Revamp your Add Task form to commit the entered data as a Task to DynamoDB.
+
+- **Homepage**
+    - Refactor your homepage’s RecyclerView to present all Task entities stored in DynamoDB.
+
+### 1. **Task Model with DynamoDB and Amplify**
+- Core data structure for the app, now backed by AWS DynamoDB using Amplify.
     - **Title**: Descriptive title for the task.
     - **Body**: Detailed information about the task.
     - **State**: Task's current state which can be one of the following, although the task type selection is not yet functional:
@@ -81,6 +92,12 @@ Welcome to the Task Manager Android application! This user-friendly application 
     - This currently displays a placeholder image.
 
 ## Daily Changes
+
+2023/08/24
+- Fully integrated AWS Amplify and transitioned from Room to DynamoDB.
+- Modified the **Add Task Form** to store tasks directly in DynamoDB.
+- Overhauled the **Homepage** to use RecyclerView that fetches tasks from DynamoDB.
+- Documentation updates to integrate today's feature tasks and revisions in the daily changes section.
 
 2023/08/17
 - Rolled out the **Task Model** integrated with Room for structured data storage.

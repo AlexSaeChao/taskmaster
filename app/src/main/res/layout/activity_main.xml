@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainActivityFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBF6DD"
     tools:context=".MainActivity">
 
     <TextView
@@ -24,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:backgroundTint="#3F51B5"
         android:text="@string/add_tasks_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MainActivityMyTasksTextView" />
@@ -34,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#3F51B5"
         android:text="@string/show_all_tasks_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MainActivityMyTasksTextView" />

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBF6DD"
     tools:context=".activities.AddTasksFormActivity">
 
     <TextView
@@ -20,16 +21,20 @@
 
     <EditText
         android:id="@+id/AddTasksActivityTaskTitleInputTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
         android:autofillHints=""
+        android:background="#45028FFA"
         android:ems="10"
         android:hint="@string/task_title"
+        android:imeOptions="actionDone"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#8D6E63"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityAddTaskTextView" />
 
@@ -39,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:backgroundTint="#3F51B5"
         android:text="@string/add_tasks_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityStateSpinner"
@@ -61,19 +67,24 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
+        android:background="#45028FFA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddTaskDescriptionTaskDescriptionMultiAutoCompleteTextView" />
 
     <MultiAutoCompleteTextView
         android:id="@+id/AddTaskDescriptionTaskDescriptionMultiAutoCompleteTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="#45028FFA"
         android:hint="@string/task_description"
+        android:imeOptions="actionDone"
         android:minHeight="48dp"
         android:textColorHint="#8D6E63"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityTaskTitleInputTextView" />
 

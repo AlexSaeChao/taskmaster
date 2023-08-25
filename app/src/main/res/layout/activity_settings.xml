@@ -5,6 +5,7 @@
     android:id="@+id/settingProfileActivityView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBF6DD"
     tools:context=".activities.SettingsActivity">
 
     <EditText
@@ -13,12 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:autofillHints=""
+        android:background="#45028FFA"
         android:ems="10"
         android:hint="@string/username_text_view"
+        android:imeOptions="actionDone"
         android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +32,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#3F51B5"
         android:text="@string/save_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -12,18 +12,20 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
 import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
 import com.chaoalex.taskmaster.activities.SettingsActivity;
 import com.chaoalex.taskmaster.adapters.TaskListRecyclerViewAdapter;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.TaskCategoryEnum;
-
 
 
 import java.util.ArrayList;
@@ -35,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
   public static final String TASK_DESCRIPTION_EXTRA_TAG = "tasksDescription";
   SharedPreferences preferences;
   List<Task> tasks = new ArrayList<>();
-
-
   TaskListRecyclerViewAdapter adapter;
 
   @Override
@@ -46,22 +46,20 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-
     setupSettingsButton();
     setupAddTasksButton();
     setupAllTasksButton();
+    updateTaskListFromDatabase();
     setupRecyclerView();
   }
-
 
   @Override
   protected void onResume() {
     super.onResume();
 
     setupUsernameTextView();
-//    updateTaskListFromDatabase();
+    updateTaskListFromDatabase();
   }
-
 
   void setupSettingsButton() {
     ImageView settingsButton = findViewById(R.id.MainActivitySettingsButton);
@@ -75,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     String userNickname = preferences.getString(USER_NICKNAME_TAG, "No Nickname");
     ((TextView) findViewById(R.id.MainActivityUserNicknameTextView)).setText(userNickname);
   }
-
 
   void setupAddTasksButton() {
     Button addTasksButton = findViewById(R.id.MainActivityMoveToAddTasksButton);
@@ -93,6 +90,25 @@ public class MainActivity extends AppCompatActivity {
       Intent goToAllTasksFormIntent = new Intent(MainActivity.this, AllTasksActivity.class);
       startActivity(goToAllTasksFormIntent);
     });
+  }
+
+  void updateTaskListFromDatabase() {
+    // todo: make a dynamoDB GRAPHQL call
+    Amplify.API.query(
+            ModelQuery.list(Task.class),
+            success -> {
+              Log.i(TAG, "Read tasks successfully!");
+              tasks.clear();
+              for (Task databaseTask : success.getData()) {
+                tasks.add(databaseTask);
+              }
+              runOnUiThread(() -> {
+                adapter.notifyDataSetChanged();
+              });
+            },
+            failure -> Log.i(TAG, "Did not read tasks successfully.")
+    );
+
   }
 
   void setupRecyclerView() {
@@ -122,13 +138,4 @@ public class MainActivity extends AppCompatActivity {
 
     TaskListsRecyclerView.setAdapter(adapter);
   }
-
-//  void updateTaskListFromDatabase() {
-//    // todo: make a dynamoDB GRAPHQL call
-////    tasks.clear();
-////    tasks.addAll(taskMasterDatabase.taskdao().findall());
-//    adapter.notifyDataSetChanged();
-//  }
-
-
 }
