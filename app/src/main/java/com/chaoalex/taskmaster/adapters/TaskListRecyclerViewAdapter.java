@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chaoalex.taskmaster.MainActivity;
 import com.chaoalex.taskmaster.R;
 import com.chaoalex.taskmaster.activities.TaskDetailActivity;
-import com.chaoalex.taskmaster.models.Task;
+import com.amplifyframework.datastore.generated.model.Task;
+
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
   @Override
   public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
     TextView taskFragmentTextView = (TextView) holder.itemView.findViewById(R.id.taskFragmentTextView);
+//    DateFormat dateFormatter = new SimpleDateFormatter("MM/dd/yyyy HH:mm zzz");
     String taskFragmentText = (position + 1) + ". " + tasks.get(position).getTitle();
 //            + "\n" + tasks.get(position).getBody()
 //            + "\n" + tasks.get(position).getDateCreated()
@@ -51,7 +53,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
     taskViewHolder.setOnClickListener(view -> {
       Intent goToTaskDetailIntent = new Intent(callingActivity, TaskDetailActivity.class);
       goToTaskDetailIntent.putExtra(MainActivity.TASK_NAME_EXTRA_TAG, tasks.get(position).getTitle());
-      goToTaskDetailIntent.putExtra(MainActivity.TASK_DESCRIPTION_EXTRA_TAG, tasks.get(position).getBody());
+      goToTaskDetailIntent.putExtra(MainActivity.TASK_DESCRIPTION_EXTRA_TAG, tasks.get(position).getDescription());
       callingActivity.startActivity(goToTaskDetailIntent);
     });
   }

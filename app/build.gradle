@@ -14,6 +14,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -29,10 +30,15 @@ android {
 }
 
 dependencies {
+
+    // Amplify API and Datastore dependencies
+    implementation 'com.amplifyframework:aws-api:2.11.2'
+    implementation 'com.amplifyframework:aws-datastore:2.11.2'
+
+    // Support for Java 8 features
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
     implementation 'androidx.test.espresso:espresso-contrib:3.5.1'
-    def room_version = "2.5.2"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
