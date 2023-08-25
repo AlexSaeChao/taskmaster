@@ -26,7 +26,6 @@ public class AddTasksFormActivity extends AppCompatActivity {
   Button saveButton;
   EditText taskTitleEditText;
   EditText taskDescriptionEditText;
-
   Spinner taskCategorySpinner;
 
 

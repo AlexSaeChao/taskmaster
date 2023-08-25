@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
-    android:layout_width="320dp"
-    android:layout_height="48dp"
-    android:background="#C2FBC5"
+    android:layout_width="280dp"
+    android:layout_height="160dp"
+    android:background="#9EFAD102"
     tools:context=".fragments.TaskListFragment">
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#3E0042"
+        android:background="#3F51B5"
         android:gravity="center"
         android:text="@string/blank_task_name"
         android:textColor="#FFFFFF"

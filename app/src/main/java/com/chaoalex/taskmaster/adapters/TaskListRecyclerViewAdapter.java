@@ -15,8 +15,13 @@ import com.chaoalex.taskmaster.R;
 import com.chaoalex.taskmaster.activities.TaskDetailActivity;
 import com.amplifyframework.datastore.generated.model.Task;
 
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 //public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter {
 
@@ -42,11 +47,12 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
   @Override
   public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
     TextView taskFragmentTextView = (TextView) holder.itemView.findViewById(R.id.taskFragmentTextView);
-//    DateFormat dateFormatter = new SimpleDateFormatter("MM/dd/yyyy HH:mm zzz");
-    String taskFragmentText = (position + 1) + ". " + tasks.get(position).getTitle();
-//            + "\n" + tasks.get(position).getBody()
-//            + "\n" + tasks.get(position).getDateCreated()
-//            + "\n" + tasks.get(position).getState();
+    String dateString = formatDateString(tasks.get(position));
+    String taskFragmentText = (position + 1) + ". " + tasks.get(position).getTitle()
+            + "\n" + tasks.get(position).getDescription()
+            + "\n" + dateString
+            + "\n" + tasks.get(position).getTaskCategory();
+
     taskFragmentTextView.setText(taskFragmentText);
 
     View taskViewHolder = holder.itemView;
@@ -60,8 +66,27 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
 
   @Override
   public int getItemCount() {
-//    return 10;
     return tasks.size();
+  }
+  private String formatDateString(Task task) {
+    DateFormat dateCreatedIso8601InputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+    dateCreatedIso8601InputFormat.setTimeZone(TimeZone.getTimeZone(("UTC")));
+    DateFormat dateCreatedOutputFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
+    dateCreatedOutputFormat.setTimeZone(TimeZone.getDefault());
+    String dateCreateString = "";
+
+    try {
+      {
+        Date dateCreateJavaDate = dateCreatedIso8601InputFormat.parse(task.getDateCreated().format());
+        if(dateCreateJavaDate != null) {
+          dateCreateString = dateCreatedOutputFormat.format(dateCreateJavaDate);
+        }
+      }
+
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    return dateCreateString;
   }
 
   public static class TaskListViewHolder extends RecyclerView.ViewHolder {
