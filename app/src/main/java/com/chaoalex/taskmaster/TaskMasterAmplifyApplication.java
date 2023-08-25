@@ -22,7 +22,6 @@ public class TaskMasterAmplifyApplication extends Application {
 //    }
     try {
       Amplify.addPlugin(new AWSApiPlugin()); // If you're using GraphQL.
-      // ... other plugins if necessary
       Amplify.configure(getApplicationContext());
       Log.i("AmplifySetup", "Amplify was configured.");
     } catch (AmplifyException e) {
