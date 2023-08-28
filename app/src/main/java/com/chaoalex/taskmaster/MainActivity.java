@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
   SharedPreferences preferences;
   List<Task> tasks = new ArrayList<>();
   TaskListRecyclerViewAdapter adapter;
+  String selectedTeam;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     setupAddTasksButton();
     setupAllTasksButton();
     updateTaskListFromDatabase();
+    selectedTeam = preferences.getString("selected_team", null);
     setupRecyclerView();
   }
 
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     super.onResume();
 
     setupUsernameTextView();
+    selectedTeam = preferences.getString("selected_team", null);
     updateTaskListFromDatabase();
   }
 
@@ -119,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
               Log.i(TAG, "Read tasks successfully!");
               tasks.clear();
               for (Task databaseTask : success.getData()) {
-                tasks.add(databaseTask);
+                if (selectedTeam == null || databaseTask.getTeam().getName().equals(selectedTeam)) {
+                  tasks.add(databaseTask);
+                }
               }
               runOnUiThread(() -> {
                 adapter.notifyDataSetChanged();
