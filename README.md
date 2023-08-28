@@ -8,16 +8,20 @@ Welcome to the Task Manager Android application! This user-friendly application 
 
 ## Features
 
-### Feature Tasks for 2023/08/24
+### Feature Tasks for 2023/08/28
 
-- **Tasks Are Cloudy**
-    - Using the `amplify add api` command, establish a Task resource that mirrors our existing Task schema. Update all references to the Task data to use AWS Amplify for accessing your data in DynamoDB.
+- **Tasks are owned by Teams**
+    - Create a new entity in the schema for Teams, with properties: String name, List<Task> tasks.
+    - Update Task schema to be the many side, owned by teams.
+    - Manually create Teams instances in your DB and run a mutation in `Main onCreate`. This needs to be run only once.
 
 - **Add Task Form**
-    - Revamp your Add Task form to commit the entered data as a Task to DynamoDB.
+    - Add a spinner to the UI that shows all the Teams from the database.
+    - Associate the selected team with the task upon creation.
 
-- **Homepage**
-    - Refactor your homepage’s RecyclerView to present all Task entities stored in DynamoDB.
+- **Settings Page**
+    - Add an option to select a team using a spinner.
+    - Based on the team selected, only show that team's tasks on the Main Activity.
 
 ### 1. **Task Model with DynamoDB and Amplify**
 - Core data structure for the app, now backed by AWS DynamoDB using Amplify.
@@ -31,7 +35,8 @@ Welcome to the Task Manager Android application! This user-friendly application 
 
 ### 2. **Homepage**
 - Reconstructed based on an improved wireframe.
-    - Implements a RecyclerView that showcases all Task entities from the local database.
+    - Implements a RecyclerView that showcases all Task entities from DynamoDB.
+    - Now filters tasks based on the team selected in settings.
     - Clicking on a Task in the RecyclerView launches its detail page with appropriate data.
     - Other Features:
         - Heading at the top.
@@ -92,6 +97,12 @@ Welcome to the Task Manager Android application! This user-friendly application 
     - This currently displays a placeholder image.
 
 ## Daily Changes
+
+2023/08/28
+- Introduced Teams as entities owned by tasks.
+- Enhanced **Add Task Form** to include team selection.
+- Updated **Settings Page** to include team selection, which filters tasks displayed on the Homepage.
+- Documentation updated to include today's feature tasks and revisions in the daily changes section.
 
 2023/08/24
 - Fully integrated AWS Amplify and transitioned from Room to DynamoDB.

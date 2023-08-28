@@ -23,7 +23,6 @@ import com.chaoalex.taskmaster.R;
 
 import java.util.ArrayList;
 import java.util.List;
-//import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsActivity extends AppCompatActivity {
   public static final String USER_NICKNAME_TAG = "userNickName";
@@ -54,21 +53,18 @@ public class SettingsActivity extends AppCompatActivity {
   void setupTeamSpinner() {
     List<String> teamNames = new ArrayList<>();
 
-    // Fetch the teams from your database
     Amplify.API.query(
             ModelQuery.list(Team.class),
             success -> {
               for (Team team : success.getData()) {
                 teamNames.add(team.getName());
               }
-              // Use a default Android spinner item layout
               ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, teamNames);
               adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
               runOnUiThread(() -> {
                 teamSpinner.setAdapter(adapter);
 
-                // Optionally set the spinner to the previously selected team
                 String selectedTeam = preferences.getString("selected_team", "Default Team");
                 if (teamNames.contains(selectedTeam)) {
                   teamSpinner.setSelection(adapter.getPosition(selectedTeam));
@@ -78,7 +74,6 @@ public class SettingsActivity extends AppCompatActivity {
             failure -> Log.e(TAG, "Could not fetch team names")
     );
 
-    // Save the selected team when a new item is selected
     teamSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
 
       @Override
       public void onNothingSelected(AdapterView<?> parent) {
-        // Do nothing here
+
       }
     });
   }
@@ -107,7 +102,6 @@ public class SettingsActivity extends AppCompatActivity {
 
       preferencesEditor.apply();
 
-//      Snackbar.make(findViewById(R.id.settingProfileActivityView), "Settings Saved!", Snackbar.LENGTH_SHORT).show();
       Toast.makeText(SettingsActivity.this, "Settings saved!!", Toast.LENGTH_SHORT).show();
     });
   }
