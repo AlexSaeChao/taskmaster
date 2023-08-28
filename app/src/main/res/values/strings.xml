@@ -22,4 +22,6 @@
     <string name="no_task_description">No task description available.</string>
     <string name="blank_task_name">Blank Task Name</string>
     <string name="state">Task State</string>
+    <string name="team_name">Team Name</string>
+    <string name="settings">Settings</string>
 </resources>

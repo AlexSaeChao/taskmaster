@@ -18,8 +18,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
 import com.chaoalex.taskmaster.activities.SettingsActivity;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
   SharedPreferences preferences;
   List<Task> tasks = new ArrayList<>();
   TaskListRecyclerViewAdapter adapter;
+  String selectedTeam;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+//    createTeams();
     setupSettingsButton();
     setupAddTasksButton();
     setupAllTasksButton();
     updateTaskListFromDatabase();
+    selectedTeam = preferences.getString("selected_team", null);
     setupRecyclerView();
   }
 
@@ -58,8 +64,25 @@ public class MainActivity extends AppCompatActivity {
     super.onResume();
 
     setupUsernameTextView();
+    selectedTeam = preferences.getString("selected_team", null);
     updateTaskListFromDatabase();
   }
+
+//  public void createTeams() {
+//    String[] teamNames = {"Team A", "Team B", "Team C"};
+//
+//    for (String teamName : teamNames) {
+//      Team team = Team.builder()
+//              .name(teamName)
+//              .build();
+//
+//      Amplify.API.mutate(
+//              ModelMutation.create(team),
+//              response -> Log.i("MainActivity.createTeams", "Added Team with id: " + response.getData().getId()),
+//              error -> Log.e("MainActivity.createTeams", "Create team failed", error)
+//      );
+//    }
+//  }
 
   void setupSettingsButton() {
     ImageView settingsButton = findViewById(R.id.MainActivitySettingsButton);
@@ -100,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
               Log.i(TAG, "Read tasks successfully!");
               tasks.clear();
               for (Task databaseTask : success.getData()) {
-                tasks.add(databaseTask);
+                if (selectedTeam == null || databaseTask.getTeam().getName().equals(selectedTeam)) {
+                  tasks.add(databaseTask);
+                }
               }
               runOnUiThread(() -> {
                 adapter.notifyDataSetChanged();

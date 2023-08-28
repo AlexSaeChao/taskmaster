@@ -51,7 +51,9 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
     String taskFragmentText = (position + 1) + ". " + tasks.get(position).getTitle()
             + "\n" + tasks.get(position).getDescription()
             + "\n" + dateString
-            + "\n" + tasks.get(position).getTaskCategory();
+            + "\n" + tasks.get(position).getTaskCategory()
+            + "\n" + tasks.get(position).getTeam().getName();
+
 
     taskFragmentTextView.setText(taskFragmentText);
 
@@ -68,6 +70,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
   public int getItemCount() {
     return tasks.size();
   }
+
   private String formatDateString(Task task) {
     DateFormat dateCreatedIso8601InputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
     dateCreatedIso8601InputFormat.setTimeZone(TimeZone.getTimeZone(("UTC")));
@@ -78,7 +81,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
     try {
       {
         Date dateCreateJavaDate = dateCreatedIso8601InputFormat.parse(task.getDateCreated().format());
-        if(dateCreateJavaDate != null) {
+        if (dateCreateJavaDate != null) {
           dateCreateString = dateCreatedOutputFormat.format(dateCreateJavaDate);
         }
       }
