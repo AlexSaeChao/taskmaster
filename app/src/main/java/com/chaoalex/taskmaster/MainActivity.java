@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+//*** TO CREATE TEAMS ***
 //    createTeams();
     setupSettingsButton();
     setupAddTasksButton();
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     selectedTeam = preferences.getString("selected_team", null);
     updateTaskListFromDatabase();
   }
+
+//*** TO CREATE TEAMS ***
 
 //  public void createTeams() {
 //    String[] teamNames = {"Team A", "Team B", "Team C"};
@@ -133,17 +136,12 @@ public class MainActivity extends AppCompatActivity {
             },
             failure -> Log.i(TAG, "Did not read tasks successfully.")
     );
-
   }
 
   void setupRecyclerView() {
     RecyclerView TaskListsRecyclerView = (RecyclerView) findViewById(R.id.taskFragmentTextView);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     TaskListsRecyclerView.setLayoutManager(layoutManager);
-//    TaskListRecyclerViewAdapter adapter = new TaskListRecyclerViewAdapter();
-
-//    TaskListRecyclerViewAdapter adapter = new TaskListRecyclerViewAdapter(tasks);
-//    TaskListsRecyclerView.setAdapter(adapter);
 
     int spaceInPixels = getResources().getDimensionPixelSize(R.dimen.task_fragment_spacing);
     TaskListsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -159,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
     });
 
     adapter = new TaskListRecyclerViewAdapter(tasks, this);
-
 
     TaskListsRecyclerView.setAdapter(adapter);
   }
