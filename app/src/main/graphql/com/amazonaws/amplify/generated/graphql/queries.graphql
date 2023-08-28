@@ -7,6 +7,18 @@ query GetTask($id: ID!) {
     description
     dateCreated
     taskCategory
+    teamID
+    team {
+      id
+      name
+      tasks {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -25,6 +37,100 @@ query ListTasks(
       description
       dateCreated
       taskCategory
+      teamID
+      team {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetTeam($id: ID!) {
+  getTeam(id: $id) {
+    id
+    name
+    tasks {
+      items {
+        id
+        title
+        description
+        dateCreated
+        taskCategory
+        teamID
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListTeams(
+  $filter: ModelTeamFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTeams(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      tasks {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query TasksByTeamIDAndTitle(
+  $teamID: ID!
+  $title: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelTaskFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  tasksByTeamIDAndTitle(
+    teamID: $teamID
+    title: $title
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      description
+      dateCreated
+      taskCategory
+      teamID
+      team {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename

@@ -18,8 +18,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
 import com.chaoalex.taskmaster.activities.SettingsActivity;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+//    createTeams();
     setupSettingsButton();
     setupAddTasksButton();
     setupAllTasksButton();
@@ -60,6 +63,22 @@ public class MainActivity extends AppCompatActivity {
     setupUsernameTextView();
     updateTaskListFromDatabase();
   }
+
+//  public void createTeams() {
+//    String[] teamNames = {"Team A", "Team B", "Team C"};
+//
+//    for (String teamName : teamNames) {
+//      Team team = Team.builder()
+//              .name(teamName)
+//              .build();
+//
+//      Amplify.API.mutate(
+//              ModelMutation.create(team),
+//              response -> Log.i("MainActivity.createTeams", "Added Team with id: " + response.getData().getId()),
+//              error -> Log.e("MainActivity.createTeams", "Create team failed", error)
+//      );
+//    }
+//  }
 
   void setupSettingsButton() {
     ImageView settingsButton = findViewById(R.id.MainActivitySettingsButton);

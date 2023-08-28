@@ -11,22 +11,33 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.model.temporal.Temporal;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.TaskCategoryEnum;
 
+import com.amplifyframework.datastore.generated.model.Team;
 import com.chaoalex.taskmaster.R;
 import com.chaoalex.taskmaster.MainActivity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import io.reactivex.rxjava3.core.Completable;
 
 public class AddTasksFormActivity extends AppCompatActivity {
+
+  CompletableFuture<List<Team>> teamsFuture = null;
+
   private final String TAG = "AddTaskFormActivity";
   Button saveButton;
   EditText taskTitleEditText;
   EditText taskDescriptionEditText;
   Spinner taskCategorySpinner;
+  Spinner taskTeamSpinner;
 
 
   @Override
@@ -37,9 +48,11 @@ public class AddTasksFormActivity extends AppCompatActivity {
     taskDescriptionEditText = findViewById(R.id.AddTaskDescriptionTaskDescriptionMultiAutoCompleteTextView);
     taskTitleEditText = findViewById(R.id.AddTasksActivityTaskTitleInputTextView);
     taskCategorySpinner = findViewById(R.id.AddTasksActivityStateSpinner);
+    taskTeamSpinner = findViewById(R.id.AddTasksActivityTeamSpinner);
     saveButton = findViewById(R.id.AddTasksActivitySaveTaskButton);
 
     setupTaskCategorySpinner();
+    setupTaskTeamSpinner();
     setupSaveButton();
   }
 
@@ -52,8 +65,20 @@ public class AddTasksFormActivity extends AppCompatActivity {
     ));
   }
 
+  void setupTaskTeamSpinner() {
+Amplify.API.query(
+        ModelQuery.list(Task.class),
+        success -> {}
+        Log.i(TAG, "Read contacts succussfully");
+    ArrayList<String> 
+)
+  }
+
   void setupSaveButton() {
     saveButton.setOnClickListener(v -> {
+
+      String selectedTeamId = getSeletedTeamId();
+
       Task taskToSave = Task.builder()
               .title(taskTitleEditText.getText().toString())
               .description(taskDescriptionEditText.getText().toString())
