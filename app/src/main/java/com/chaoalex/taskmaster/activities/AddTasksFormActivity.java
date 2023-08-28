@@ -45,6 +45,8 @@ public class AddTasksFormActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_tasks);
 
+    teamsFuture = new CompletableFuture<>();
+
     taskDescriptionEditText = findViewById(R.id.AddTaskDescriptionTaskDescriptionMultiAutoCompleteTextView);
     taskTitleEditText = findViewById(R.id.AddTasksActivityTaskTitleInputTextView);
     taskCategorySpinner = findViewById(R.id.AddTasksActivityStateSpinner);
@@ -66,18 +68,35 @@ public class AddTasksFormActivity extends AppCompatActivity {
   }
 
   void setupTaskTeamSpinner() {
-Amplify.API.query(
-        ModelQuery.list(Task.class),
-        success -> {}
-        Log.i(TAG, "Read contacts succussfully");
-    ArrayList<String> 
-)
+    Amplify.API.query(
+            ModelQuery.list(Team.class),
+            success -> {
+              Log.i(TAG, "Read contacts succussfully");
+              ArrayList<String> teamNames = new ArrayList<>();
+              ArrayList<Team> teams = new ArrayList<>();
+              for (Team team : success.getData()) {
+                teams.add(team);
+                teamNames.add(team.getName());
+              }
+              teamsFuture.complete(teams);
+
+              runOnUiThread(() -> {
+                taskTeamSpinner.setAdapter(new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        teamNames
+                ));
+              });
+            },
+            failure -> {
+              teamsFuture.complete(null);
+              Log.i(TAG, "Did not read contacts successfully!!");
+            }
+    );
   }
 
   void setupSaveButton() {
     saveButton.setOnClickListener(v -> {
-
-      String selectedTeamId = getSeletedTeamId();
 
       Task taskToSave = Task.builder()
               .title(taskTitleEditText.getText().toString())
