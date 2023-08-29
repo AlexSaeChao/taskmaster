@@ -10,6 +10,10 @@ Welcome to the Task Manager Android application! This user-friendly application 
 
 ### Feature Tasks for 2023/08/28
 
+- **App Introduced to the Google Play Store**
+    - App was introduced to the Google Play Store!
+    - ScreenShot captured to show app is still under review.
+
 - **Tasks are owned by Teams**
     - Create a new entity in the schema for Teams, with properties: String name, List<Task> tasks.
     - Update Task schema to be the many side, owned by teams.
@@ -74,6 +78,9 @@ Welcome to the Task Manager Android application! This user-friendly application 
 ![Add Tasks Screenshot](images/taskmaster_add_tasks.png)
 ![All Tasks Screenshot](images/taskmaster_all_tasks.png)
 ![Task Detail Screenshot](images/taskmaster_tasks_detail.png)
+![Google Play Console DashBoard](images/google_play_console_dashboard.png)
+![Google Play Console Publishing Overview](images/google_play_console_publishing_overview.png)
+
 
 ## How to Use
 
@@ -99,6 +106,8 @@ Welcome to the Task Manager Android application! This user-friendly application 
 ## Daily Changes
 
 2023/08/28
+- App was introduced to the Google Play Store!
+- ScreenShot captured to show app is still under review.
 - Introduced Teams as entities owned by tasks.
 - Enhanced **Add Task Form** to include team selection.
 - Updated **Settings Page** to include team selection, which filters tasks displayed on the Homepage.
