@@ -19,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
+import com.amplifyframework.auth.options.AuthSignOutOptions;
+import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
@@ -44,6 +48,49 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+//    Cognito Signup Logic
+//    Amplify.Auth.signUp("chaoalex93@gmail.com",
+//            "P@sswwrd123",
+//            AuthSignUpOptions.builder()
+//                    .userAttribute(AuthUserAttributeKey.email(), "chaoalex93@gmail.com")
+//                    .userAttribute(AuthUserAttributeKey.nickname(), "Chao")
+//                    .build(),
+//            successResponse -> Log.i(TAG, "Signup succeeded: " + successResponse.toString()),
+//            failureResponse -> Log.i(TAG, "Signup failed with username: " + "chaoalex93@gmail.com" + " with this message: " + failureResponse.toString())
+//            );
+
+//    Cognito Verification Logic
+//    Amplify.Auth.confirmSignUp("chaoalex93@gmail.com",
+//            "602713",
+//            success -> {
+//              Log.i(TAG, "Verification succeeded: " + success.toString());
+//            },
+//            failure -> {
+//              Log.i(TAG, "Verification failed: " + failure.toString());
+//            }
+//    );
+
+    //    Cognito Login Logic
+//    Amplify.Auth.signIn("chaoalex93@gmail.com",
+//            "P@sswwrd123",
+//            success -> Log.i(TAG, "Login succeeded: " + success.toString()),
+//            failure -> Log.i(TAG, "Login failed: " + failure.toString())
+//    );
+
+    AuthSignOutOptions signOutOptions = AuthSignOutOptions.builder()
+            .globalSignOut(true)
+            .build();
+
+    Amplify.Auth.signOut(signOutOptions, signOutResult -> {
+      if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
+        Log.i(TAG, "Global sign out Successful!");
+      } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
+        Log.i(TAG, "Partial sign out Successful!");
+      } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.FailedSignOut) {
+        Log.i(TAG, "Sign out FAILED!");
+      }
+    });
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -96,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void updateTaskListFromDatabase() {
-    // todo: make a dynamoDB GRAPHQL call
     Amplify.API.query(
             ModelQuery.list(Task.class),
             success -> {
