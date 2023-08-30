@@ -2,6 +2,7 @@ package com.chaoalex.taskmaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -41,13 +42,16 @@ public class SignupActivity extends AppCompatActivity {
               passwordEditText.getText().toString(),
               AuthSignUpOptions.builder()
                       .userAttribute(AuthUserAttributeKey.email(), emailEditText.getText().toString())
-//                      .userAttribute(AuthUserAttributeKey.nickname(), "Chao")
                       .build(),
-              successResponse -> Log.i(TAG, "Signup succeeded: " + successResponse.toString()),
+              successResponse -> {
+                Log.i(TAG, "Signup succeeded: " + successResponse.toString());
+                Intent goToVerifyActivity = new Intent(SignupActivity.this, VerifyActivity.class);
+                goToVerifyActivity.putExtra("email", emailEditText.getText().toString());
+                startActivity(goToVerifyActivity);
+              },
               failureResponse -> Log.i(TAG, "Signup failed with username: " + "chaoalex93@gmail.com" + " with this message: " + failureResponse.toString())
       );
     });
 
-    //TODO MOVE from sign up to verify page
   }
 }

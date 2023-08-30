@@ -51,11 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-//    AuthSignOutOptions signOutOptions = AuthSignOutOptions.builder()
+    //    AuthSignOutOptions signOutOptions = AuthSignOutOptions.builder()
 //            .globalSignOut(true)
 //            .build();
 //
@@ -68,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
 //        Log.i(TAG, "Sign out FAILED!");
 //      }
 //    });
+
+
+
+
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 

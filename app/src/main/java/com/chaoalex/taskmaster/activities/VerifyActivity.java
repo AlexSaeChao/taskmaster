@@ -2,6 +2,7 @@ package com.chaoalex.taskmaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -36,11 +37,12 @@ void setupSubmitButton() {
             verificationCodeEditText.getText().toString(),
             success -> {
               Log.i(TAG, "Verification succeeded: " + success.toString());
+              Intent goToLoginIntent = new Intent(VerifyActivity.this, LoginActivity.class);
+              startActivity(goToLoginIntent);
             },
             failure -> {
               Log.i(TAG, "Verification failed: " + failure.toString());
             }
     );
-    //TODO ON SUCCESS, MOVE TO LOGIN PAGE
   }
 }

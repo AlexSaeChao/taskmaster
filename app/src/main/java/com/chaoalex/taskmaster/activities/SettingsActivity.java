@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,24 +31,28 @@ public class SettingsActivity extends AppCompatActivity {
   SharedPreferences.Editor preferencesEditor;
   Spinner teamSpinner;
 
+  Button signupButton;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_settings);
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    preferencesEditor = preferences.edit();
 
     teamSpinner = findViewById(R.id.SettingsActivityTeamSpinner);
-    preferencesEditor = preferences.edit();
+    signupButton = findViewById(R.id.SettingsActivitySignupButton);
 
     setupSettingsActivityUsernameTextView();
     setupTeamSpinner();
     setupSaveButton();
+    setupSignupButton();
   }
 
   void setupSettingsActivityUsernameTextView() {
     String userNickname = preferences.getString(USER_NICKNAME_TAG, null);
-    ((EditText)findViewById(R.id.SettingsActivityUsernameTextView)).setText(userNickname);
+    ((EditText) findViewById(R.id.SettingsActivityUsernameTextView)).setText(userNickname);
   }
 
   void setupTeamSpinner() {
@@ -90,7 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
   }
 
   void setupSaveButton() {
-    ((Button)findViewById(R.id.SettingsActivitySaveButton)).setOnClickListener(view -> {
+    ((Button) findViewById(R.id.SettingsActivitySaveButton)).setOnClickListener(view -> {
       SharedPreferences.Editor preferencesEditor = preferences.edit();
 
       EditText userNicknameEditText = (EditText) findViewById(R.id.SettingsActivityUsernameTextView);
@@ -103,6 +108,13 @@ public class SettingsActivity extends AppCompatActivity {
       preferencesEditor.apply();
 
       Toast.makeText(SettingsActivity.this, "Settings saved!!", Toast.LENGTH_SHORT).show();
+    });
+  }
+
+  void setupSignupButton() {
+    signupButton.setOnClickListener(v -> {
+      Intent goToSignupActivityIntent = new Intent(SettingsActivity.this, SignupActivity.class);
+      startActivity(goToSignupActivityIntent);
     });
   }
 }
