@@ -47,5 +47,7 @@ public class SignupActivity extends AppCompatActivity {
               failureResponse -> Log.i(TAG, "Signup failed with username: " + "chaoalex93@gmail.com" + " with this message: " + failureResponse.toString())
       );
     });
+
+    //TODO MOVE from sign up to verify page
   }
 }

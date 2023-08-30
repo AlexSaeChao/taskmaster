@@ -28,4 +28,7 @@
     <string name="signup_page">Signup Page</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
+    <string name="verify_account">Verify Account</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="verify">Verify</string>
 </resources>

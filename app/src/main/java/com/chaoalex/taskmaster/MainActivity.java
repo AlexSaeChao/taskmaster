@@ -51,16 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//    Cognito Verification Logic
-//    Amplify.Auth.confirmSignUp("chaoalex93@gmail.com",
-//            "602713",
-//            success -> {
-//              Log.i(TAG, "Verification succeeded: " + success.toString());
-//            },
-//            failure -> {
-//              Log.i(TAG, "Verification failed: " + failure.toString());
-//            }
-//    );
+
 
     //    Cognito Login Logic
 //    Amplify.Auth.signIn("chaoalex93@gmail.com",
