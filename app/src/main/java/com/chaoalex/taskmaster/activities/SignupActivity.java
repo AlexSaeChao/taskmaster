@@ -15,9 +15,9 @@ import com.chaoalex.taskmaster.R;
 public class SignupActivity extends AppCompatActivity {
   public static final String TAG = "SignupActivity";
 
-  Button submitButton;
   EditText emailEditText;
   EditText passwordEditText;
+  Button submitButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

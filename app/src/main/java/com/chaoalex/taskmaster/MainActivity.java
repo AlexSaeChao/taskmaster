@@ -53,26 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //    Cognito Login Logic
-//    Amplify.Auth.signIn("chaoalex93@gmail.com",
-//            "P@sswwrd123",
-//            success -> Log.i(TAG, "Login succeeded: " + success.toString()),
-//            failure -> Log.i(TAG, "Login failed: " + failure.toString())
-//    );
 
-    AuthSignOutOptions signOutOptions = AuthSignOutOptions.builder()
-            .globalSignOut(true)
-            .build();
 
-    Amplify.Auth.signOut(signOutOptions, signOutResult -> {
-      if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
-        Log.i(TAG, "Global sign out Successful!");
-      } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
-        Log.i(TAG, "Partial sign out Successful!");
-      } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.FailedSignOut) {
-        Log.i(TAG, "Sign out FAILED!");
-      }
-    });
+//    AuthSignOutOptions signOutOptions = AuthSignOutOptions.builder()
+//            .globalSignOut(true)
+//            .build();
+//
+//    Amplify.Auth.signOut(signOutOptions, signOutResult -> {
+//      if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
+//        Log.i(TAG, "Global sign out Successful!");
+//      } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
+//        Log.i(TAG, "Partial sign out Successful!");
+//      } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.FailedSignOut) {
+//        Log.i(TAG, "Sign out FAILED!");
+//      }
+//    });
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
