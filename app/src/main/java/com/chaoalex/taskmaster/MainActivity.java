@@ -49,16 +49,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-//    Cognito Signup Logic
-//    Amplify.Auth.signUp("chaoalex93@gmail.com",
-//            "P@sswwrd123",
-//            AuthSignUpOptions.builder()
-//                    .userAttribute(AuthUserAttributeKey.email(), "chaoalex93@gmail.com")
-//                    .userAttribute(AuthUserAttributeKey.nickname(), "Chao")
-//                    .build(),
-//            successResponse -> Log.i(TAG, "Signup succeeded: " + successResponse.toString()),
-//            failureResponse -> Log.i(TAG, "Signup failed with username: " + "chaoalex93@gmail.com" + " with this message: " + failureResponse.toString())
-//            );
+
 
 //    Cognito Verification Logic
 //    Amplify.Auth.confirmSignUp("chaoalex93@gmail.com",
