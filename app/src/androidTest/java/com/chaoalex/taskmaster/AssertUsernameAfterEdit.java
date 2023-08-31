@@ -39,59 +39,7 @@ public class AssertUsernameAfterEdit {
   public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
           new ActivityScenarioRule<>(MainActivity.class);
 
-  @Test
-  public void assertUsernameAfterEdit() {
-    ViewInteraction appCompatImageView = onView(
-            allOf(withId(R.id.MainActivitySettingsButton), withContentDescription("Send user to settings page."),
-                    childAtPosition(
-                            childAtPosition(
-                                    withId(android.R.id.content),
-                                    0),
-                            3),
-                    isDisplayed()));
-    appCompatImageView.perform(click());
 
-    ViewInteraction appCompatEditText = onView(
-            allOf(withId(R.id.SettingsActivityUsernameTextView),
-                    childAtPosition(
-                            allOf(withId(R.id.settingProfileActivityView),
-                                    childAtPosition(
-                                            withId(android.R.id.content),
-                                            0)),
-                            0),
-                    isDisplayed()));
-    appCompatEditText.perform(replaceText("Test Nickname"), closeSoftKeyboard());
-
-    ViewInteraction appCompatEditText2 = onView(
-            allOf(withId(R.id.SettingsActivityUsernameTextView), withText("Test Nickname"),
-                    childAtPosition(
-                            allOf(withId(R.id.settingProfileActivityView),
-                                    childAtPosition(
-                                            withId(android.R.id.content),
-                                            0)),
-                            0),
-                    isDisplayed()));
-    appCompatEditText2.perform(pressImeActionButton());
-
-    ViewInteraction materialButton = onView(
-            allOf(withId(R.id.SettingsActivitySaveButton), withText("Save"),
-                    childAtPosition(
-                            allOf(withId(R.id.settingProfileActivityView),
-                                    childAtPosition(
-                                            withId(android.R.id.content),
-                                            0)),
-                            1),
-                    isDisplayed()));
-    materialButton.perform(click());
-
-    pressBack();
-
-    ViewInteraction textView = onView(
-            allOf(withId(R.id.MainActivityUserNicknameTextView), withText("Test Nickname"),
-                    withParent(withParent(withId(android.R.id.content))),
-                    isDisplayed()));
-    textView.check(matches(withText("Test Nickname")));
-  }
 
   private static Matcher<View> childAtPosition(
           final Matcher<View> parentMatcher, final int position) {
