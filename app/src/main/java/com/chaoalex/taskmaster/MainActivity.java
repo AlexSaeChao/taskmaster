@@ -1,7 +1,5 @@
 package com.chaoalex.taskmaster;
 
-import static com.chaoalex.taskmaster.activities.SettingsActivity.USER_NICKNAME_TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUserAttribute;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
+import com.amplifyframework.auth.exceptions.SignedOutException;
+import com.amplifyframework.auth.options.AuthSignOutOptions;
 import com.amplifyframework.core.Amplify;
 import com.chaoalex.taskmaster.activities.AddTasksFormActivity;
 import com.chaoalex.taskmaster.activities.AllTasksActivity;
@@ -45,24 +48,66 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+    setupSignOutButton();
     setupSettingsButton();
     setupAddTasksButton();
     setupAllTasksButton();
     updateTaskListFromDatabase();
-    selectedTeam = preferences.getString("selected_team", null);
     setupRecyclerView();
+
+    selectedTeam = preferences.getString("selected_team", null);
   }
 
   @Override
   protected void onResume() {
     super.onResume();
 
+    setupSignOutButton();
     setupUsernameTextView();
     selectedTeam = preferences.getString("selected_team", null);
     updateTaskListFromDatabase();
   }
+
+  void setupSignOutButton() {
+    Button signoutButton = findViewById(R.id.MainActivitySignoutButton);
+
+    Amplify.Auth.getCurrentUser(
+            authUser -> {
+              runOnUiThread(() -> signoutButton.setVisibility(View.VISIBLE));
+            },
+            authException -> {
+              runOnUiThread(() -> signoutButton.setVisibility(View.GONE));
+            }
+    );
+
+    signoutButton.setOnClickListener(v -> {
+      AuthSignOutOptions signOutOptions = null;
+      try {
+        signOutOptions = AuthSignOutOptions.builder()
+                .globalSignOut(true)
+                .build();
+      } catch (Exception e) {
+        Log.e(TAG, "Exception occurred during sign-out", e);
+      }
+
+      if (signOutOptions != null) { // Make sure signOutOptions is not null before proceeding
+        Amplify.Auth.signOut(signOutOptions, signOutResult -> {
+          if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
+            Log.i(TAG, "Global sign out Successful!");
+            runOnUiThread(() -> signoutButton.setVisibility(View.GONE));
+          } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
+            Log.i(TAG, "Partial sign out Successful!");
+          } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.FailedSignOut) {
+            Log.i(TAG, "Sign out FAILED!");
+          }
+        });
+      }
+    });
+  }
+
 
   void setupSettingsButton() {
     ImageView settingsButton = findViewById(R.id.MainActivitySettingsButton);
@@ -73,8 +118,27 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void setupUsernameTextView() {
-    String userNickname = preferences.getString(USER_NICKNAME_TAG, "No Nickname");
-    ((TextView) findViewById(R.id.MainActivityUserNicknameTextView)).setText(userNickname);
+    Amplify.Auth.fetchUserAttributes(
+            attributes -> {
+              for (AuthUserAttribute attribute : attributes) {
+                if (attribute.getKey().equals(AuthUserAttributeKey.email())) {
+                  String email = attribute.getValue();
+                  runOnUiThread(() -> {
+                    ((TextView) findViewById(R.id.MainActivityUserNicknameTextView)).setText(email);
+                  });
+                  break;
+                }
+              }
+            },
+            error -> {
+              Log.e(TAG, "Fetching user attributes failed", error);
+              if (error instanceof SignedOutException) {
+                runOnUiThread(() -> {
+                  ((TextView) findViewById(R.id.MainActivityUserNicknameTextView)).setText("");
+                });
+              }
+            }
+    );
   }
 
   void setupAddTasksButton() {
@@ -96,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void updateTaskListFromDatabase() {
-    // todo: make a dynamoDB GRAPHQL call
     Amplify.API.query(
             ModelQuery.list(Task.class),
             success -> {

@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
+import com.amplifyframework.auth.options.AuthSignOutOptions;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Team;
 import com.chaoalex.taskmaster.R;
@@ -25,10 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
-  public static final String USER_NICKNAME_TAG = "userNickName";
+  public static final String TAG = "SettingsActivity";
   SharedPreferences preferences;
   SharedPreferences.Editor preferencesEditor;
   Spinner teamSpinner;
+  Button signupButton;
+  Button loginButton;
+  Button signoutButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +42,44 @@ public class SettingsActivity extends AppCompatActivity {
     setContentView(R.layout.activity_settings);
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-    teamSpinner = findViewById(R.id.SettingsActivityTeamSpinner);
     preferencesEditor = preferences.edit();
 
-    setupSettingsActivityUsernameTextView();
+    teamSpinner = findViewById(R.id.SettingsActivityTeamSpinner);
+    signupButton = findViewById(R.id.SettingsActivitySignupButton);
+    loginButton = findViewById(R.id.SettingsActivityLoginButton);
+
+    updateAuthUI();
     setupTeamSpinner();
     setupSaveButton();
+    setupSignupButton();
+    setupLoginButton();
+    setupSignOutButton();
   }
 
-  void setupSettingsActivityUsernameTextView() {
-    String userNickname = preferences.getString(USER_NICKNAME_TAG, null);
-    ((EditText)findViewById(R.id.SettingsActivityUsernameTextView)).setText(userNickname);
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    updateAuthUI();
+  }
+
+  private void updateAuthUI() {
+    Amplify.Auth.getCurrentUser(
+            authUser -> {
+              runOnUiThread(() -> {
+                signupButton.setVisibility(View.GONE);
+                loginButton.setVisibility(View.GONE);
+                signoutButton.setVisibility(View.VISIBLE);
+              });
+            },
+            authException -> {
+              runOnUiThread(() -> {
+                signupButton.setVisibility(View.VISIBLE);
+                loginButton.setVisibility(View.VISIBLE);
+                signoutButton.setVisibility(View.GONE);
+              });
+            }
+    );
   }
 
   void setupTeamSpinner() {
@@ -90,12 +122,8 @@ public class SettingsActivity extends AppCompatActivity {
   }
 
   void setupSaveButton() {
-    ((Button)findViewById(R.id.SettingsActivitySaveButton)).setOnClickListener(view -> {
+    ((Button) findViewById(R.id.SettingsActivitySaveButton)).setOnClickListener(view -> {
       SharedPreferences.Editor preferencesEditor = preferences.edit();
-
-      EditText userNicknameEditText = (EditText) findViewById(R.id.SettingsActivityUsernameTextView);
-      String userNicknameString = userNicknameEditText.getText().toString();
-      preferencesEditor.putString(USER_NICKNAME_TAG, userNicknameString);
 
       String selectedTeam = teamSpinner.getSelectedItem().toString();
       preferencesEditor.putString("selected_team", selectedTeam);
@@ -103,6 +131,40 @@ public class SettingsActivity extends AppCompatActivity {
       preferencesEditor.apply();
 
       Toast.makeText(SettingsActivity.this, "Settings saved!!", Toast.LENGTH_SHORT).show();
+    });
+  }
+
+  void setupSignupButton() {
+    signupButton.setOnClickListener(v -> {
+      Intent goToSignupActivityIntent = new Intent(SettingsActivity.this, SignupActivity.class);
+      startActivity(goToSignupActivityIntent);
+    });
+  }
+
+  void setupLoginButton() {
+    loginButton.setOnClickListener(v -> {
+      Intent goToLoginActivityIntent = new Intent(SettingsActivity.this, LoginActivity.class);
+      startActivity(goToLoginActivityIntent);
+    });
+  }
+
+  void setupSignOutButton() {
+    signoutButton = findViewById(R.id.SettingsActivityLogoutButton);
+    signoutButton.setOnClickListener(v -> {
+
+      AuthSignOutOptions signOutOptions = AuthSignOutOptions.builder()
+              .globalSignOut(true)
+              .build();
+
+      Amplify.Auth.signOut(signOutOptions, signOutResult -> {
+        if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
+          Log.i(TAG, "Global sign out Successful!");
+        } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
+          Log.i(TAG, "Partial sign out Successful!");
+        } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.FailedSignOut) {
+          Log.i(TAG, "Sign out FAILED!");
+        }
+      });
     });
   }
 }
