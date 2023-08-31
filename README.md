@@ -1,31 +1,32 @@
+# TaskMaster
+
 Welcome to the Task Manager Android application! This user-friendly application allows you to manage and view tasks seamlessly. Let's dive into its features and documentation.
 
 ## Table of Contents
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [How to Use](#how-to-use)
-- [Daily Changes](#daily-changes)
+1. [Features](#features)
+2. [Screenshots](#screenshots)
+3. [Installation](#installation)
+4. [How to Use](#how-to-use)
+5. [Technologies Used](#technologies-used)
+6. [Daily Changes](#daily-changes)
 
 ## Features
 
-### Feature Tasks for 2023/08/28
+### Feature Tasks for 2023/08/30
 
-- **App Introduced to the Google Play Store**
-    - App was introduced to the Google Play Store!
-    - ScreenShot captured to show app is still under review.
+- **Manual Walkthrough Signup/Verify/Login/Logout Flow**
+    - Completed a manual walkthrough of the Cognito authentication process.
+    - Added Cognito dependencies and plugin according to the official documentation.
+    - Incorporated Cognito to the Amplify setup using the CLI: `amplify add auth`.
+    - Tested sign-up, verification, and login within `SettingsActivity` and confirmed via AWS Console & email.
 
-- **Tasks are owned by Teams**
-    - Create a new entity in the schema for Teams, with properties: String name, List<Task> tasks.
-    - Update Task schema to be the many side, owned by teams.
-    - Manually create Teams instances in your DB and run a mutation in `Main onCreate`. This needs to be run only once.
+- **Create User SignUp/Login Flow**
+    - Implemented separate Activities for Signup, Verification, and Login.
+    - Each activity includes relevant UI components such as input fields and buttons for user interaction.
 
-- **Add Task Form**
-    - Add a spinner to the UI that shows all the Teams from the database.
-    - Associate the selected team with the task upon creation.
-
-- **Settings Page**
-    - Add an option to select a team using a spinner.
-    - Based on the team selected, only show that team's tasks on the Main Activity.
+- **Add Ability to Login/Logout from Main Activity**
+    - Enhanced Main Activity to display login or logout button based on the user's authentication state.
+    - Added auto-login feature after verification (time permitting).
 
 ### 1. **Task Model with DynamoDB and Amplify**
 - Core data structure for the app, now backed by AWS DynamoDB using Amplify.
@@ -74,6 +75,28 @@ Welcome to the Task Manager Android application! This user-friendly application 
 
 ## Screenshots
 
+### Home Screen
+- **With Login**
+  ![Homepage With Login](images/taskmaster_home_with_login.png)
+- **Without Login**
+  ![Homepage Without Login](images/taskmaster_home_without_login.png)
+
+### Signup Page
+![Signup Page](images/taskmaster_signup_page.png)
+
+### Verification Page
+![Verification Page](images/taskmaster_verify.png)
+
+### Login Page
+![Login Page](images/taskmaster_login.png)
+
+### Settings Page
+- **With Login**
+  ![Settings With Login](images/taskmaster_settings_with_login.png)
+- **Without Login**
+  ![Settings Without Login](images/taskmaster_settings_without_login.png)
+
+### Previous Screenshots
 ![Homepage Screenshot](images/taskmaster_home.png)
 ![Add Tasks Screenshot](images/taskmaster_add_tasks.png)
 ![All Tasks Screenshot](images/taskmaster_all_tasks.png)
@@ -81,37 +104,84 @@ Welcome to the Task Manager Android application! This user-friendly application 
 ![Google Play Console DashBoard](images/google_play_console_dashboard.png)
 ![Google Play Console Publishing Overview](images/google_play_console_publishing_overview.png)
 
+## Installation
+
+1. **Google Play Store**
+    - Google Play Store link to be provided soon!
+
+2. **Manual Installation**
+    - Download the APK file.
+    - Follow the installation prompts.
 
 ## How to Use
+
+### Starting Up
 
 1. **Launching the Application**
     - Initiate the app to view the homepage.
 
-2. **Adding a Task**
+### User Authentication
+
+2. **User Signup**
+    - If not already a registered user, navigate to the Signup page from the settings.
+    - Fill in your username and password, and then click the "Submit" button.
+    - You will receive a verification code via email.
+
+3. **Verification**
+    - After signing up, you'll be directed to the Verification page.
+    - Enter the verification code that was sent to your email.
+    - Click the "Verify" button.
+
+4. **User Login**
+    - If already a registered user, navigate to the Login page.
+    - Enter your username and password, and then click the "Submit" button.
+    - Upon successful login, you'll be redirected to the homepage.
+
+### Task Management
+
+5. **Adding a Task**
     - From the homepage, navigate to "Add a Task".
     - Fill in the task details and click submit.
 
-3. **Viewing a Task Detail**
+6. **Viewing a Task Detail**
     - From the homepage, select a task title from the RecyclerView.
     - The detail page of that specific task will appear.
 
-4. **Personalizing with Settings**
+### Personalization
+
+7. **Personalizing with Settings**
     - Click on the settings icon from the homepage.
+    - If logged in, you'll see additional options.
     - Enter your username and save.
 
-5. **Browsing All Tasks**
+8. **Logout**
+    - You can log out from the settings page or the main activity page by clicking the "Logout" button. After logging out, you will see the login button again.
+
+### Browsing All Tasks
+
+9. **Browsing All Tasks**
     - Select "All Tasks" from the homepage.
     - This currently displays a placeholder image.
 
+## Technologies Used
+
+- Java for Android Development
+- AWS Amplify & DynamoDB for backend services
+- Android Studio for IDE
+- RecyclerView for list management
+
 ## Daily Changes
+
+2023/08/30
+- Completed a comprehensive manual walk through for Cognito Signup/Verify/Login/Logout flow.
+- Created distinct Activities for user Signup, Verification, and Login.
+- Updated Main Activity to handle Login/Logout dynamically based on user's authentication state.
 
 2023/08/28
 - App was introduced to the Google Play Store!
-- ScreenShot captured to show app is still under review.
 - Introduced Teams as entities owned by tasks.
 - Enhanced **Add Task Form** to include team selection.
 - Updated **Settings Page** to include team selection, which filters tasks displayed on the Homepage.
-- Documentation updated to include today's feature tasks and revisions in the daily changes section.
 
 2023/08/24
 - Fully integrated AWS Amplify and transitioned from Room to DynamoDB.

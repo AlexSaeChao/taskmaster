@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
@@ -37,21 +38,26 @@ public class SignupActivity extends AppCompatActivity {
 
   void setupSubmitButton() {
     submitButton.setOnClickListener(v -> {
-      //    Cognito Signup Logic
-      Amplify.Auth.signUp(emailEditText.getText().toString(),
+      Amplify.Auth.signUp(
+              emailEditText.getText().toString(),
               passwordEditText.getText().toString(),
               AuthSignUpOptions.builder()
                       .userAttribute(AuthUserAttributeKey.email(), emailEditText.getText().toString())
                       .build(),
               successResponse -> {
                 Log.i(TAG, "Signup succeeded: " + successResponse.toString());
+//                Toast.makeText(SignupActivity.this, "Signup succeeded", Toast.LENGTH_SHORT).show();
+
                 Intent goToVerifyActivity = new Intent(SignupActivity.this, VerifyActivity.class);
                 goToVerifyActivity.putExtra("email", emailEditText.getText().toString());
+
                 startActivity(goToVerifyActivity);
               },
-              failureResponse -> Log.i(TAG, "Signup failed with username: " + "chaoalex93@gmail.com" + " with this message: " + failureResponse.toString())
+              failureResponse -> {
+                Log.i(TAG, "Signup failed: " + failureResponse.toString());
+//                Toast.makeText(SignupActivity.this, "Signup failed", Toast.LENGTH_SHORT).show();
+              }
       );
     });
-
   }
 }
