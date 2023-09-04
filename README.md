@@ -12,21 +12,27 @@ Welcome to the Task Manager Android application! This user-friendly application 
 
 ## Features
 
-### Feature Tasks for 2023/08/30
+### Feature Tasks for 2023/09/03
 
-- **Manual Walkthrough Signup/Verify/Login/Logout Flow**
-    - Completed a manual walkthrough of the Cognito authentication process.
-    - Added Cognito dependencies and plugin according to the official documentation.
-    - Incorporated Cognito to the Amplify setup using the CLI: `amplify add auth`.
-    - Tested sign-up, verification, and login within `SettingsActivity` and confirmed via AWS Console & email.
+- **S3 Integration with TaskMaster**
+    - Integrated Amazon S3 with the TaskMaster app for enhanced media storage capabilities.
+    - Users can now attach images or documents to their tasks, providing a richer description and context.
 
-- **Create User SignUp/Login Flow**
-    - Implemented separate Activities for Signup, Verification, and Login.
-    - Each activity includes relevant UI components such as input fields and buttons for user interaction.
+- **Image Upload Feature in Add Task Form**
+    - Enhanced the "Add Task Form" to include an option to upload images directly.
+    - Images uploaded are securely stored in an S3 bucket and can be referenced and displayed within the app.
 
-- **Add Ability to Login/Logout from Main Activity**
-    - Enhanced Main Activity to display login or logout button based on the user's authentication state.
-    - Added auto-login feature after verification (time permitting).
+- **Task Detail Page Media Display**
+    - The Task Detail Page has been revamped to not only display the task's title and body but also any associated images or documents.
+    - Thumbnails of uploaded images are shown, which users can tap to view in full-screen mode.
+
+- **Backend Optimizations for Media Handling**
+    - Introduced efficient and secure media handling practices to ensure that user uploads are processed quickly and securely.
+    - Added error handling mechanisms to gracefully handle scenarios where media uploads might fail, giving users appropriate feedback.
+
+- **Cache Mechanism for Faster Media Retrieval**
+    - Implemented a caching mechanism to ensure frequently accessed images are loaded faster on subsequent views.
+    - This significantly improves the user experience, especially when viewing tasks with high-resolution images.
 
 ### 1. **Task Model with DynamoDB and Amplify**
 - Core data structure for the app, now backed by AWS DynamoDB using Amplify.
@@ -96,13 +102,21 @@ Welcome to the Task Manager Android application! This user-friendly application 
 - **Without Login**
   ![Settings Without Login](images/taskmaster_settings_without_login.png)
 
-### Previous Screenshots
-![Homepage Screenshot](images/taskmaster_home.png)
-![Add Tasks Screenshot](images/taskmaster_add_tasks.png)
-![All Tasks Screenshot](images/taskmaster_all_tasks.png)
-![Task Detail Screenshot](images/taskmaster_tasks_detail.png)
-![Google Play Console DashBoard](images/google_play_console_dashboard.png)
+### Other Screenshots
+
+![Google Play Console Dashboard](images/google_play_console_dashboard.png)
+
 ![Google Play Console Publishing Overview](images/google_play_console_publishing_overview.png)
+
+![TaskMaster Add Task With Image](images/taskmaster_add_task_with_image.png)
+
+![TaskMaster All Tasks](images/taskmaster_all_tasks.png)
+
+![TaskMaster Task Detail 2](images/taskmaster_task_detail_2.png)
+
+![TaskMaster Task Details 1](images/taskmaster_task_details_1.png)
+
+![TaskMaster Tasks Detail](images/taskmaster_tasks_detail.png)
 
 ## Installation
 

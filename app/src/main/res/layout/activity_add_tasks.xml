@@ -34,7 +34,7 @@
         android:minHeight="48dp"
         android:textColorHint="#6D4C41"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityAddTaskTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/AddTasksFormActivityTaskImageView" />
 
     <Button
         android:id="@+id/AddTasksActivitySaveTaskButton"
@@ -83,5 +83,17 @@
         android:contentDescription="@string/team_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityStateSpinner" />
+
+    <ImageView
+        android:id="@+id/AddTasksFormActivityTaskImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/task_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddTasksActivityAddTaskTextView"
+        app:srcCompat="@drawable/ic_launcher_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
