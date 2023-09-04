@@ -30,6 +30,10 @@ import com.chaoalex.taskmaster.adapters.TaskListRecyclerViewAdapter;
 import com.amplifyframework.datastore.generated.model.Task;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
   private final String TAG = "MainActivity";
   public static final String TASK_NAME_EXTRA_TAG = "tasksName";
   public static final String TASK_DESCRIPTION_EXTRA_TAG = "tasksDescription";
+  public static final String TASK_ID_EXTRA_TAG = "taskID";
   SharedPreferences preferences;
   List<Task> tasks = new ArrayList<>();
   TaskListRecyclerViewAdapter adapter;
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+//    manualS3FileUpload();
     setupSignOutButton();
     setupSettingsButton();
     setupAddTasksButton();
@@ -107,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
-
 
   void setupSettingsButton() {
     ImageView settingsButton = findViewById(R.id.MainActivitySettingsButton);
@@ -200,4 +205,30 @@ public class MainActivity extends AppCompatActivity {
 
     TaskListsRecyclerView.setAdapter(adapter);
   }
+
+//  void manualS3FileUpload() {
+//    String testFileName = "testFileName";
+//    File testFile = new File(getApplicationContext().getFilesDir(), testFileName);
+//    try {
+//      BufferedWriter writer = new BufferedWriter(new FileWriter(testFile));
+//      writer.append("Test file content\nAnother line here");
+//      writer.close();
+//    } catch (IOException ioe) {
+//      Log.e(TAG, "Error writing to the file" + testFileName);
+//    }
+//
+//    String testFileS3Key = "someFileOnS3.txt";
+//
+//    Amplify.Storage.uploadFile(
+//            testFileS3Key,
+//            testFile,
+//            success -> {
+//              Log.i(TAG, "Successfully uploaded: " + success.getKey());
+//            },
+//            failure -> {
+//              Log.e(TAG, "Upload failed" + failure.getMessage());
+//            }
+//    );
+//  }
+
 }
